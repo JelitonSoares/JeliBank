@@ -8,7 +8,6 @@ public class User {
     private double sale;
     private String password;
 
-
     public User (String userName, String accountType, double sale, String password) {
         this.userName = userName;
         this.accountType = accountType;
@@ -16,22 +15,7 @@ public class User {
         this.password = password;
     }
 
-    public String getUserName () {
-        return userName;
-    }
-
-    public String getAccountType () {
-        return accountType;
-    }
-
-    public double getSale () {
-        return  sale;
-    }
-
-    private double completeReceive(double value) {
-            sale += value;
-            return sale;
-    }
+    Scanner scanner = new Scanner(System.in);
 
     public void displayTechnicalSheet () {
         System.out.println("""
@@ -43,47 +27,47 @@ public class User {
                 ***********************
                 """.formatted(userName, accountType, sale));
     }
-    public  void receiveValue(double value, String password) {
-        if (password.equals(this.password)) {
-            double newSale = completeReceive(value);
-            System.out.println(String.format("""
-                    Valor Recebido!!
-                    Novo Saldo: %.2f""", newSale));
-        } else {
-            System.out.println("Senha inválida!!");
-        }
+
+    public void viewSale () {
+        System.out.println("""
+                Saldo Atual: %.2f""".formatted(sale));
     }
 
-    public void trasferValue (double value, String password) {
-        if (password.equals(this.password)) {
-            double newSale = completeTransfer(value);
-            System.out.println("""
-                    Transferência Concluida!!
-                    Novo saldo: %.2f""".formatted(newSale));
-        } else {
-            System.out.println("Senha Inválida!!");
-
-        }
+    private boolean confirmPassword () {
+        System.out.println("Digite sua senha: ");
+        String password = scanner.nextLine();
+        return password.equals(this.password);
     }
-
-    public double completeTransfer (double value) {
-        sale -= value;
-        return sale;
-    }
-
-    Scanner scanner = new Scanner(System.in);
-    public String pegaSenha () {
-        System.out.println("Digite a sua senha: ");
-        String senha = scanner.nextLine();
-        return senha;
-    }
-
-    public double pegaValor () {
+    public  void receiveValue() {
         System.out.println("Digite o valor: ");
-        double valor = scanner.nextDouble();
-        return valor;
+        double value = scanner.nextDouble();
+        confirmPassword();
+        if (confirmPassword()) {
+            sale += value;
+            System.out.println("""
+                    Deposito Concluido
+                    Novo Saldo: %.2f""".formatted(sale));
+        } else {
+            System.out.println("Senha incorreta!!");
+        }
     }
 
+    public void transferValue() {
+        System.out.println("Digite o valor: ");
+        double value = scanner.nextDouble();
+        if (value <= sale) {
+            confirmPassword();
+            if (confirmPassword()) {
+                sale -= value;
+                System.out.println("""
+                        Transferencia Concluída!!
+                        Saldo atual: %.2f""".formatted(sale));
+            } else {
+                System.out.println("Senha incorreta!!");
+            }
+        } else {
+            System.out.println("Saldo insuficiente!!");
+        }
+    }
 
-
-}
+    }
