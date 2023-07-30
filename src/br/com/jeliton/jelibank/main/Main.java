@@ -29,39 +29,34 @@ public class Main {
             System.out.println("""
                     Operações:
                     
-                    1 - Exibir Ficha
+                    1 - Exibir Fica Tecnica
                     2 - Consultar Saldo
-                    3 - Receber
+                    3 - Depositar
                     4 - Transferir
                     5 - Sair""");
-
             int opcao = scanner.nextInt();
+
             switch (opcao) {
                 case 1:
                     newUser.displayTechnicalSheet();
                     break;
                 case 2:
-                    System.out.println("""
-                            Saldo Atual: %.2f
-                            """.formatted(newUser.getSale()));
+                    newUser.viewSale();
                     break;
                 case 3:
-                    String senha = newUser.pegaSenha();
-                    double valor = newUser.pegaValor();
-                    newUser.receiveValue(valor, senha);
+                    newUser.receiveValue();
                     break;
                 case 4:
-                    String password = newUser.pegaSenha();
-                    double value = newUser.pegaValor();
-                    newUser.trasferValue(value, password);
+                    newUser.transferValue();
                     break;
                 case 5:
-                    System.out.println("Obrigado por usar o JeliBank!!");
+                    System.out.println("Obrigado por usar o JeliBank! Volte sempre ;)");
                     sair = true;
                     break;
                 default:
-                    System.out.println("Opção inválida!!");
+                    System.out.println("Opção Inválida!!");
             }
+
         }
 
     }
